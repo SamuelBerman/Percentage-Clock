@@ -6,7 +6,7 @@ from ctypes import windll
 windll.shcore.SetProcessDpiAwareness(1)
 
 root = Tk()
-scale_factor = root.winfo_fpixels('1i') / 72.0
+scale_factor = root.winfo_fpixels('1i') / 96.0
 
 WIDTH, HEIGHT = 100 * scale_factor, 40 * scale_factor
 
