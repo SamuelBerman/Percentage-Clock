@@ -1,12 +1,18 @@
 from tkinter import *
 from threading import Timer
 from datetime import datetime
+from ctypes import windll
 
-x, y = 1700, 15
-
-WIDTH, HEIGHT = 100, 40
+windll.shcore.SetProcessDpiAwareness(1)
 
 root = Tk()
+scale_factor = root.winfo_fpixels('1i') / 72.0
+
+WIDTH, HEIGHT = 100 * scale_factor, 40 * scale_factor
+
+x = (root.winfo_screenwidth() / 2) - (WIDTH / 2)
+y = (root.winfo_screenheight() / 2) - (HEIGHT / 2)
+
 root.overrideredirect(True)
 root.resizable(False, False)
 root.geometry('%dx%d+%d+%d' % (WIDTH, HEIGHT, x, y))
