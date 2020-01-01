@@ -35,7 +35,7 @@ def left_click(event):
         global x, y
         x, y = event.x, event.y
 
-def middle_click(event):
+def double_click(event):
     if not locked:
         root.destroy()
 
@@ -45,7 +45,7 @@ def right_click(event):
 
 root.bind("<B1-Motion>", mouse_motion)
 root.bind("<Button-1>", left_click)
-root.bind("<Button-2>", middle_click)
+root.bind("<Double-Button-1>", double_click)
 root.bind("<Button-3>", right_click)
 
 # End of Movement Code
