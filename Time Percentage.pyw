@@ -17,6 +17,11 @@ root.overrideredirect(True)
 root.resizable(False, False)
 root.geometry('%dx%d+%d+%d' % (WIDTH, HEIGHT, x, y))
 
+text = StringVar()
+
+l = Label(root, textvariable=text, bg="#333333", fg='#cccccc', font=('Verdana', 16), bd=0, relief='solid')
+l.pack(fill=BOTH, expand=True)
+
 # movement code adapted from:
 # https://stackoverflow.com/questions/4055267/tkinter-mouse-drag-a-window-without-borders-eg-overridedirect1
 
@@ -42,6 +47,7 @@ def double_click(event):
 def right_click(event):
     global locked
     locked = not locked
+    l.config(bd=locked)
 
 root.bind("<B1-Motion>", mouse_motion)
 root.bind("<Button-1>", left_click)
@@ -49,11 +55,6 @@ root.bind("<Double-Button-1>", double_click)
 root.bind("<Button-3>", right_click)
 
 # End of Movement Code
-
-text = StringVar()
-
-l = Label(root, textvariable=text, bg="#333333", fg='#cccccc', font=('Verdana', 16))
-l.pack(fill=BOTH, expand=True)
 
 def update():
     now = datetime.now()
