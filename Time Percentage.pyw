@@ -27,27 +27,32 @@ l.pack(fill=BOTH, expand=True)
 
 locked = False
 
+
 def mouse_motion(event):
     if not locked:
         global x, y
-        offset_x, offset_y = event.x - x, event.y - y  
+        offset_x, offset_y = event.x - x, event.y - y
         new_x = root.winfo_x() + offset_x
         new_y = root.winfo_y() + offset_y
         root.geometry(f"+{new_x}+{new_y}")
+
 
 def left_click(event):
     if not locked:
         global x, y
         x, y = event.x, event.y
 
+
 def double_click(event):
     if not locked:
         root.destroy()
 
+
 def right_click(event):
     global locked
     locked = not locked
-    l.config(bd=locked)
+    l.config(bd=locked * scale_factor)
+
 
 root.bind("<B1-Motion>", mouse_motion)
 root.bind("<Button-1>", left_click)
@@ -55,6 +60,7 @@ root.bind("<Double-Button-1>", double_click)
 root.bind("<Button-3>", right_click)
 
 # End of Movement Code
+
 
 def update():
     now = datetime.now()
@@ -65,6 +71,7 @@ def update():
     t = Timer(1, update)
     t.setDaemon(True)
     t.start()
+
 
 update()
 root.mainloop()
