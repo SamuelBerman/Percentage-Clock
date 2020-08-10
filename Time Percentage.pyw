@@ -83,7 +83,7 @@ def update():
     if ALWAYS_ON_TOP:
         root.lift()
 
-    t = Timer(1, update)
+    t = Timer(0.5, update)
     t.setDaemon(True)
     t.start()
 
