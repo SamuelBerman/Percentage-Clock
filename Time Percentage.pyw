@@ -1,7 +1,17 @@
 from tkinter import *
 from threading import Timer
-from datetime import datetime
+from datetime import datetime, timezone
 from ctypes import windll
+
+# This is a new time standard, meant to be universal for everyone. It does not have time zones.
+# It uses percentage so that everyone can understand it, and it's reference is UTC 24 hour time.
+
+# To-Do: multi-device
+
+
+ALWAYS_ON_TOP = False
+ALPHA = 1.0
+
 
 windll.shcore.SetProcessDpiAwareness(1)
 
@@ -16,6 +26,8 @@ y = (root.winfo_screenheight() / 2) - (HEIGHT / 2)
 root.overrideredirect(True)
 root.resizable(False, False)
 root.geometry('%dx%d+%d+%d' % (WIDTH, HEIGHT, x, y))
+root.wm_attributes("-topmost", ALWAYS_ON_TOP)
+root.wm_attributes("-alpha", ALPHA)
 
 text = StringVar()
 
@@ -63,7 +75,7 @@ root.bind("<Button-3>", right_click)
 
 
 def update():
-    now = datetime.now()
+    now = datetime.now(timezone.utc)
     seconds = (now - now.replace(hour=0, minute=0, second=0, microsecond=0)).seconds
 
     text.set(str(format(round(seconds/864, 2), '.2f')) + '%')
