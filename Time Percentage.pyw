@@ -6,7 +6,7 @@ from ctypes import windll
 # This is a new time standard, meant to be universal for everyone. It does not have time zones.
 # It uses percentage so that everyone can understand it, and it's reference is UTC 24 hour time.
 
-# To-Do: multi-device
+# To-Do: multi-device, memory leak?
 
 
 ALWAYS_ON_TOP = True
