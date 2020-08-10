@@ -9,7 +9,7 @@ from ctypes import windll
 # To-Do: multi-device
 
 
-ALWAYS_ON_TOP = False
+ALWAYS_ON_TOP = True
 ALPHA = 1.0
 
 
@@ -79,6 +79,9 @@ def update():
     seconds = (now - now.replace(hour=0, minute=0, second=0, microsecond=0)).seconds
 
     text.set(str(format(round(seconds/864, 2), '.2f')) + '%')
+
+    if ALWAYS_ON_TOP:
+        root.lift()
 
     t = Timer(1, update)
     t.setDaemon(True)
