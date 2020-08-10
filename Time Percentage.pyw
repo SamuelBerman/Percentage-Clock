@@ -1,12 +1,11 @@
 from tkinter import *
-from threading import Timer
 from datetime import datetime, timezone
 from ctypes import windll
 
 # This is a new time standard, meant to be universal for everyone. It does not have time zones.
 # It uses percentage so that everyone can understand it, and it's reference is UTC 24 hour time.
 
-# To-Do: multi-device, memory leak?
+# To-Do: multi-device
 
 
 ALWAYS_ON_TOP = True
@@ -83,10 +82,8 @@ def update():
     if ALWAYS_ON_TOP:
         root.lift()
 
-    t = Timer(0.5, update)
-    t.setDaemon(True)
-    t.start()
+    root.after(500, update)
 
 
-update()
+root.after(0, update)
 root.mainloop()
