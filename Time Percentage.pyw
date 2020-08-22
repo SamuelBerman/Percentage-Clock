@@ -64,6 +64,16 @@ def mouse_motion(event):
         offset_x, offset_y = event.x - x, event.y - y
         new_x = root.winfo_x() + offset_x
         new_y = root.winfo_y() + offset_y
+
+        if new_y < 0:
+            new_y = 0
+        elif new_y > root.winfo_screenheight() - HEIGHT:
+            new_y = int(root.winfo_screenheight() - HEIGHT)
+        if new_x < 0:
+            new_x = 0
+        elif new_x > root.winfo_screenwidth() - WIDTH:
+            new_x = int(root.winfo_screenwidth() - WIDTH)
+
         root.geometry(f"+{new_x}+{new_y}")
 
 
