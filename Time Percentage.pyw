@@ -1,12 +1,27 @@
 from tkinter import *
 from datetime import datetime, timezone
 from ctypes import windll
+from winreg import *
 
-# To-Do: multi-device, save settings in file
+# To-Do: save settings in file
 
 ALWAYS_ON_TOP = False
 ALPHA = 1.0
 
+
+# Windows Accent Color code adapted (and fixed) from:
+# https://www.rigaspapas.com/blog/mastering-windows-10-appearance-with-python/
+
+def getAccentColor():
+    registry = ConnectRegistry(None, HKEY_CURRENT_USER)
+    key = OpenKey(
+        registry, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent')
+    key_value = QueryValueEx(key, 'AccentColorMenu')
+    accent_hex = str(hex(key_value[0]))[4:]
+    accent = accent_hex[4:6]+accent_hex[2:4]+accent_hex[0:2]
+    return '#'+accent
+
+accent = getAccentColor()
 
 windll.shcore.SetProcessDpiAwareness(1)
 
@@ -26,8 +41,16 @@ root.wm_attributes("-alpha", ALPHA)
 
 text = StringVar()
 
-l = Label(root, textvariable=text, bg="#333333", fg='#cccccc', font=('Verdana', 16), bd=0, relief='solid')
+
+
+border = Frame(root, highlightbackground=accent, highlightcolor=accent, highlightthickness=2, bd=0)
+border.pack(fill=BOTH, expand=True)
+
+
+l = Label(border, textvariable=text, bg='#333333', fg='#eeeeee', font=('Segoe UI', 18), bd=0)
 l.pack(fill=BOTH, expand=True)
+
+
 
 # movement code adapted from:
 # https://stackoverflow.com/questions/4055267/tkinter-mouse-drag-a-window-without-borders-eg-overridedirect1
@@ -58,7 +81,11 @@ def double_click(event):
 def right_click(event):
     global locked
     locked = not locked
-    l.config(bd=locked * scale_factor)
+
+    if not locked:
+        border.config(highlightbackground=accent, highlightcolor=accent)
+    else:
+        border.config(highlightbackground='#454545', highlightcolor='#454545')
 
 
 root.bind("<B1-Motion>", mouse_motion)
@@ -71,7 +98,8 @@ root.bind("<Button-3>", right_click)
 
 def update():
     now = datetime.now(timezone.utc)
-    seconds = (now - now.replace(hour=0, minute=0, second=0, microsecond=0)).seconds
+    seconds = (now - now.replace(hour=0, minute=0,
+                                 second=0, microsecond=0)).seconds
 
     text.set(str(format(round(seconds/864, 2), '.2f')) + '%')
 
