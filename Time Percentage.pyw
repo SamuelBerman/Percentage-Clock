@@ -21,6 +21,7 @@ def getAccentColor():
     accent = accent_hex[4:6]+accent_hex[2:4]+accent_hex[0:2]
     return '#'+accent
 
+
 accent = getAccentColor()
 
 windll.shcore.SetProcessDpiAwareness(1)
@@ -39,17 +40,16 @@ root.geometry('%dx%d+%d+%d' % (WIDTH, HEIGHT, x, y))
 root.wm_attributes("-topmost", ALWAYS_ON_TOP)
 root.wm_attributes("-alpha", ALPHA)
 
+
 text = StringVar()
 
-
-
-border = Frame(root, highlightbackground=accent, highlightcolor=accent, highlightthickness=2, bd=0)
+border = Frame(root, highlightbackground=accent,
+               highlightcolor=accent, highlightthickness=2, bd=0)
 border.pack(fill=BOTH, expand=True)
 
-
-l = Label(border, textvariable=text, bg='#333333', fg='#eeeeee', font=('Segoe UI', 18), bd=0)
+l = Label(border, textvariable=text, bg='#333333',
+          fg='#eeeeee', font=('Segoe UI', 18), bd=0)
 l.pack(fill=BOTH, expand=True)
-
 
 
 # movement code adapted from:
